@@ -1,0 +1,20 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Sensitive Terraform variables
+*.tfvars
+*.tfvars.json
+
+# Credentials and private keys
+*.pem
+*.key
+credentials
+.aws/
+
+# Windows
+Thumbs.db
+Desktop.ini
