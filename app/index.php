@@ -60,10 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Secure User Registration</title>
+    <title>CloudForge</title>
 </head>
 <body>
-    <h2>Secure Project Registration Form</h2>
+    <h2>Welcome to CloudForge</h2>
 
     <!-- Form submits to the exact same file -->
     <form method="POST" action="">
