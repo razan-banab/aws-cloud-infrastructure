@@ -4,7 +4,7 @@ resource "aws_security_group" "ALB_SG" {
     Name = "cloud-project-alb-sg"
   }
   name        = "ALB-SG"
-  description = "Allow inbound HTTPS to the public application load balancer"
+  description = "Allow inbound HTTPS and HTTP to the public application load balancer"
   vpc_id      = aws_vpc.vpc.id
   egress      = []
 }
@@ -18,14 +18,24 @@ resource "aws_vpc_security_group_ingress_rule" "ALB_from_Internet" {
   cidr_ipv4   = "0.0.0.0/0"
 
 }
+resource "aws_vpc_security_group_ingress_rule" "ALB_from_Internet_HTTP" {
+  security_group_id = aws_security_group.ALB_SG.id
+  description       = "Allow inbound HTTP traffic from the internet to the Application Load Balancer"
+
+  ip_protocol = "tcp"
+  from_port   = 80
+  to_port     = 80
+  cidr_ipv4   = "0.0.0.0/0"
+
+}
 resource "aws_vpc_security_group_egress_rule" "ALB_to_APP" {
   security_group_id            = aws_security_group.ALB_SG.id
   referenced_security_group_id = aws_security_group.APP_SG.id
-  description                  = "Allow outbound HTTPS traffic to application instances"
+  description                  = "Allow outbound HTTP traffic to application instances"
 
   ip_protocol = "tcp"
-  from_port   = 443
-  to_port     = 443
+  from_port   = 80
+  to_port     = 80
 }
 
 #security group for Application instance
@@ -42,11 +52,11 @@ resource "aws_security_group" "APP_SG" {
 resource "aws_vpc_security_group_ingress_rule" "APP_from_ALB" {
   security_group_id            = aws_security_group.APP_SG.id
   referenced_security_group_id = aws_security_group.ALB_SG.id
-  description                  = "Allow inbound HTTPS traffic from the ALB"
+  description                  = "Allow inbound HTTP traffic from the ALB"
 
   ip_protocol = "tcp"
-  from_port   = 443
-  to_port     = 443
+  from_port   = 80
+  to_port     = 80
 }
 resource "aws_vpc_security_group_egress_rule" "APP_to_DB" {
   security_group_id            = aws_security_group.APP_SG.id
@@ -59,7 +69,7 @@ resource "aws_vpc_security_group_egress_rule" "APP_to_DB" {
 }
 resource "aws_vpc_security_group_egress_rule" "internet_to_app" {
   security_group_id = aws_security_group.APP_SG.id
-  description       = "Allow outbound HTTPS traffic to the database"
+  description       = "Allow outbound HTTPS traffic to external services"
 
   ip_protocol = "tcp"
   from_port   = 443
@@ -88,7 +98,7 @@ resource "aws_vpc_security_group_ingress_rule" "DB_from_APP" {
 }
 resource "aws_vpc_security_group_egress_rule" "internet_to_db" {
   security_group_id = aws_security_group.DB_SG.id
-  description       = "Allow outbound HTTPS traffic to the database"
+  description       = "Allow outbound HTTPS traffic for database updates"
 
   ip_protocol = "tcp"
   from_port   = 443

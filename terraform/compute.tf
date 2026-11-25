@@ -24,6 +24,7 @@ resource "aws_instance" "app_EC2" {
   iam_instance_profile        = aws_iam_instance_profile.profile.name
   subnet_id                   = aws_subnet.private_app_subnet.id
   vpc_security_group_ids      = [aws_security_group.APP_SG.id]
+  user_data                   = file("${path.module}/../user_data/app_server.sh")
   associate_public_ip_address = false
 }
 
@@ -44,5 +45,6 @@ resource "aws_instance" "DB_EC2" {
   iam_instance_profile        = aws_iam_instance_profile.profile.name
   subnet_id                   = aws_subnet.private_db_subnet.id
   vpc_security_group_ids      = [aws_security_group.DB_SG.id]
+  user_data                   = file("${path.module}/../user_data/db_server.sh")
   associate_public_ip_address = false
 }
