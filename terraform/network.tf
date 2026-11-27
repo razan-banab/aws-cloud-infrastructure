@@ -10,6 +10,7 @@ resource "aws_vpc" "vpc" {
 data "aws_availability_zones" "available" {
   state = "available"
 }
+
 resource "aws_subnet" "public_subnet_1" {
   tags = {
     Name = "cloud-project-public-subnet-1"
@@ -68,6 +69,14 @@ resource "aws_network_acl" "public_subnet_acl" {
     cidr_block = "0.0.0.0/0"
     from_port  = 443
     to_port    = 443
+  }
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 150
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 80
+    to_port    = 80
   }
   egress {
     protocol   = "tcp"
