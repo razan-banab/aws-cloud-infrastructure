@@ -83,8 +83,8 @@ resource "aws_network_acl" "public_subnet_acl" {
     rule_no    = 110
     action     = "allow"
     cidr_block = "10.0.2.0/24"
-    from_port  = 443
-    to_port    = 443
+    from_port  = 80
+    to_port    = 80
   }
   ingress {
     protocol   = "tcp"
@@ -193,8 +193,8 @@ resource "aws_network_acl" "private_app_subnet_acl" {
     rule_no    = 100
     action     = "allow"
     cidr_block = "10.0.1.0/24"
-    from_port  = 443
-    to_port    = 443
+    from_port  = 80
+    to_port    = 80
   }
   egress {
     protocol   = "tcp"
@@ -210,8 +210,8 @@ resource "aws_network_acl" "private_app_subnet_acl" {
     rule_no    = 110
     action     = "allow"
     cidr_block = "10.0.4.0/24"
-    from_port  = 443
-    to_port    = 443
+    from_port  = 80
+    to_port    = 80
   }
   egress {
     protocol   = "tcp"
@@ -236,7 +236,7 @@ resource "aws_network_acl" "private_app_subnet_acl" {
     action     = "allow"
     cidr_block = "10.0.3.0/24"
     from_port  = 32768
-    to_port    = 65535
+    to_port    = 60999
   }
   #nat gateway
   egress {

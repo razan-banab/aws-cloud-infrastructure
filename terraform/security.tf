@@ -1,15 +1,14 @@
 #security group for Application load balancer
-resource "aws_security_group" "ALB_SG" {
+resource "aws_security_group" "ALB_SG_v2" {
   tags = {
     Name = "cloud-project-alb-sg"
   }
-  name        = "ALB-SG"
+  name        = "ALB-SG-v2"
   description = "Allow inbound HTTPS and HTTP to the public application load balancer"
   vpc_id      = aws_vpc.vpc.id
-  egress      = []
 }
 resource "aws_vpc_security_group_ingress_rule" "ALB_from_Internet" {
-  security_group_id = aws_security_group.ALB_SG.id
+  security_group_id = aws_security_group.ALB_SG_v2.id
   description       = "Allow inbound HTTPS traffic from the internet to the Application Load Balancer"
 
   ip_protocol = "tcp"
@@ -19,7 +18,7 @@ resource "aws_vpc_security_group_ingress_rule" "ALB_from_Internet" {
 
 }
 resource "aws_vpc_security_group_ingress_rule" "ALB_from_Internet_HTTP" {
-  security_group_id = aws_security_group.ALB_SG.id
+  security_group_id = aws_security_group.ALB_SG_v2.id
   description       = "Allow inbound HTTP traffic from the internet to the Application Load Balancer"
 
   ip_protocol = "tcp"
@@ -29,7 +28,7 @@ resource "aws_vpc_security_group_ingress_rule" "ALB_from_Internet_HTTP" {
 
 }
 resource "aws_vpc_security_group_egress_rule" "ALB_to_APP" {
-  security_group_id            = aws_security_group.ALB_SG.id
+  security_group_id            = aws_security_group.ALB_SG_v2.id
   referenced_security_group_id = aws_security_group.APP_SG.id
   description                  = "Allow outbound HTTP traffic to application instances"
 
@@ -46,12 +45,11 @@ resource "aws_security_group" "APP_SG" {
   name        = "APP-SG"
   description = "Allow application instances to communicate with the database over MySQL"
   vpc_id      = aws_vpc.vpc.id
-  egress      = []
 }
 
 resource "aws_vpc_security_group_ingress_rule" "APP_from_ALB" {
   security_group_id            = aws_security_group.APP_SG.id
-  referenced_security_group_id = aws_security_group.ALB_SG.id
+  referenced_security_group_id = aws_security_group.ALB_SG_v2.id
   description                  = "Allow inbound HTTP traffic from the ALB"
 
   ip_protocol = "tcp"
@@ -85,7 +83,6 @@ resource "aws_security_group" "DB_SG" {
   name        = "DB-SG"
   description = "Allow inbound database connections from application instances"
   vpc_id      = aws_vpc.vpc.id
-  egress      = []
 }
 resource "aws_vpc_security_group_ingress_rule" "DB_from_APP" {
   security_group_id            = aws_security_group.DB_SG.id

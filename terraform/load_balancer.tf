@@ -7,7 +7,7 @@ resource "aws_lb" "alb" {
     aws_subnet.public_subnet_2.id
   ]
   security_groups = [
-    aws_security_group.ALB_SG.id
+    aws_security_group.ALB_SG_v2.id
   ]
 }
 
