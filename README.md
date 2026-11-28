@@ -6,7 +6,7 @@ The project focuses on infrastructure automation, network segmentation, controll
 
 ## Architecture
 
-![CloudForge AWS Architecture](docs/cloudforge-architecture)
+![CloudForge AWS Architecture](docs/cloudforge-architecture.png)
 
 **AWS Region:** Europe (Stockholm) — `eu-north-1`
 
