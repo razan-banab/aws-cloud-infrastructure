@@ -155,11 +155,11 @@ The project was tested through the following checks:
 ### Load Balancer Health Check
 ![Target Group Health](screenshots/target-health.png)
 
-### Database
-![MySQL Database](screenshots/database.png)
-
 ### Application
 ![Successful User Registration](screenshots/registration-success.png)
+
+### Database
+![MySQL Database](screenshots/database.png)
 
 ## Skills Demonstrated
 
