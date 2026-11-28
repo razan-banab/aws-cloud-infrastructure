@@ -143,7 +143,7 @@ The project was tested through the following checks:
 
 ## Project Screenshots
 
-### Network Architecture
+### Terraform Apply
 ![Terraform Apply](screenshots/terraform-apply.png)
 
 ### Network Architecture
